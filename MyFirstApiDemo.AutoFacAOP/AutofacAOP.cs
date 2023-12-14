@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace MyFirstApiDemo.AutoFacAOP
 {
@@ -12,9 +13,11 @@ namespace MyFirstApiDemo.AutoFacAOP
     {
         public void Intercept(IInvocation invocation)
         {
-            Console.WriteLine("start");
+            var timer = Stopwatch.StartNew();
             invocation.Proceed();
-            Console.WriteLine("end");
+
+            timer.Stop();
+            Console.WriteLine($"Duration: {timer.Elapsed.TotalSeconds}");
         }
 
     }
