@@ -17,7 +17,7 @@ namespace MyFirstApiDemo.AutoFacAOP
             invocation.Proceed();
 
             timer.Stop();
-            Console.WriteLine($"Duration: {timer.Elapsed.TotalSeconds}");
+            Console.WriteLine($"API Name: {invocation.Method.Name}, Duration: {timer.Elapsed.TotalSeconds}");
         }
 
     }

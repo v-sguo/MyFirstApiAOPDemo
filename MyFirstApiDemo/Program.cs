@@ -21,13 +21,16 @@ namespace MyFirstApiDemo
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<IStudentService, StudentService>();
 
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
             builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
             {
+                var assembly = Assembly.Load("MyFirstApiDemo.Services");
                 builder.RegisterType<AutofacAOP>();
-                builder.RegisterType<StudentService>().As<IStudentService>().EnableInterfaceInterceptors();
+                builder.RegisterAssemblyTypes(assembly)
+                    .Where(p => p.Name.EndsWith("Service"))
+                    .AsImplementedInterfaces()
+                    .EnableInterfaceInterceptors();
             });
 
             var app = builder.Build();
